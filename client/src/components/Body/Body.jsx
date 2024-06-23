@@ -1,13 +1,13 @@
 import React from 'react';
-import AdminPanel from './AdminPanel';
-import UserPanel from './UserPanel';
+import AdminPanelButton from './AdminPanelButton';
+import UserPanelButton from './UserPanelButton';
 import styles from './styles.module.css';
 
 const Body = () => {
   return (
     <div className={styles.container}>
-      <AdminPanel />
-      <UserPanel />
+      <AdminPanelButton />
+      <UserPanelButton />
     </div>
   );
 };

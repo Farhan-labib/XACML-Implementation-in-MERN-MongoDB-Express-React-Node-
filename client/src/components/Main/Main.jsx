@@ -1,19 +1,12 @@
 import styles from "./styles.module.css";
 import Body from "../Body/Body";
+import Navbar from "../Navbar/Navbar";
 const Main = () => {
-	const handleLogout = () => {
-		localStorage.removeItem("token");
-		window.location.reload();
-	};
+	
 
 	return (
 		<div className={styles.main_container}>
-			<nav className={styles.navbar}>
-				<h1>NavBar</h1>
-				<button className={styles.white_btn} onClick={handleLogout}>
-					Logout
-				</button>
-			</nav>
+			<Navbar/>
 			<Body />
 		</div>
 	);
