@@ -1,5 +1,5 @@
 import styles from "./styles.module.css";
-
+import Body from "../Body/Body";
 const Main = () => {
 	const handleLogout = () => {
 		localStorage.removeItem("token");
@@ -14,6 +14,7 @@ const Main = () => {
 					Logout
 				</button>
 			</nav>
+			<Body />
 		</div>
 	);
 };
