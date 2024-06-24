@@ -6,7 +6,7 @@ import AdminPanel from "./components/Pages/AdminPanel";
 import UserPanel from "./components/Pages/UserPanel";
 
 function App() {
-  const user = localStorage.getItem("token");
+  const user = localStorage.getItem("userData");
 
   return (
     <Routes>
