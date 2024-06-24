@@ -6,7 +6,15 @@ backend/
 │   └── user.js
 ├── routes/
 │   ├── auth.js
-│   └── users.js
+│   ├── users.js
+│   └── xacml.js
+├── policies/
+│   └── policy.xml
+├── xacml/
+│   ├── PAP.js
+│   ├── PDP.js
+│   ├── PEP.js
+│   └── PIP.js
 ├── db.js
 ├── index.js
 ├── .env
