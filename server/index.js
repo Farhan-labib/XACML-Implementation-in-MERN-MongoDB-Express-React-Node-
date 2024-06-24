@@ -6,7 +6,7 @@ const cors = require("cors");
 const connection = require("./db");
 const userRoutes = require("./routes/users");
 const authRoutes = require("./routes/auth");
-const PEPHandler = require("./routes/xacml"); // Assuming xacml.js is correct and exporting the router correctly
+const PEPHandler = require("./routes/xacml");
 
 // database connection
 connection();
