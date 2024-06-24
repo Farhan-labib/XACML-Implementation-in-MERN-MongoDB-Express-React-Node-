@@ -1,3 +1,4 @@
+// index.js (backend)
 require("dotenv").config();
 const express = require("express");
 const app = express();
@@ -5,6 +6,7 @@ const cors = require("cors");
 const connection = require("./db");
 const userRoutes = require("./routes/users");
 const authRoutes = require("./routes/auth");
+const PEPHandler = require("./routes/xacml"); // Assuming xacml.js is correct and exporting the router correctly
 
 // database connection
 connection();
@@ -12,6 +14,9 @@ connection();
 // middlewares
 app.use(express.json());
 app.use(cors());
+
+// PEP endpoint
+app.use("/api/pep", PEPHandler); // Mount the router for /api/pep
 
 // routes
 app.use("/api/users", userRoutes);
