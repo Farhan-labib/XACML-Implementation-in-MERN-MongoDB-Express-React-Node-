@@ -1,4 +1,6 @@
-function pap(userRole) {
-   //oi role ki parbe oita ber kora xml theke
-   
+const PAP = async () => {
+   return 'Policies from PAP'
 }
+
+module.exports = PAP;
+ 
