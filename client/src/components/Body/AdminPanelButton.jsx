@@ -10,7 +10,7 @@ const AdminPanelButton = () => {
     const url = "http://localhost:8080/api/pep";
     const userData = JSON.parse(localStorage.getItem("userData"));
     const { role } = userData;
-    const action = "read";
+    const action = "write";
     const resource = "admin-panel";
     
     const requestOptions = {

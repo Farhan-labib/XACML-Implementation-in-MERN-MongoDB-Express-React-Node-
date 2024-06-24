@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PolicySet xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" PolicySetId="example-policy-set" PolicyCombiningAlgId="urn:oasis:names:tc:xacml:3.0:policy-combining-algorithm:deny-overrides">
+    <Target>
+        <AnyOf>
+            <AllOf>
+                <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                    <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">admin</AttributeValue>
+                    <AttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-role" Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"/>
+                </Match>
+            </AllOf>
+        </AnyOf>
+    </Target>
+    <Policy PolicyId="admin-policy" RuleCombiningAlgId="urn:oasis:names:tc:xacml:3.0:rule-combining-algorithm:deny-overrides">
+        <Target>
+            <AnyOf>
+                <AllOf>
+                    <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                        <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">write</AttributeValue>
+                        <AttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"/>
+                    </Match>
+                </AllOf>
+            </AnyOf>
+        </Target>
+        <Rule RuleId="admin-write-rule" Effect="Permit">
+            <Condition>
+                <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:any-of">
+                    <Function FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal"/>
+                    <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">admin-panel</AttributeValue>
+                    <AttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id" Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"/>
+                </Apply>
+            </Condition>
+        </Rule>
+    </Policy>
+    <Policy PolicyId="user-policy" RuleCombiningAlgId="urn:oasis:names:tc:xacml:3.0:rule-combining-algorithm:deny-overrides">
+        <Target>
+            <AnyOf>
+                <AllOf>
+                    <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                        <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">user</AttributeValue>
+                        <AttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-role" Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"/>
+                    </Match>
+                </AllOf>
+            </AnyOf>
+        </Target>
+        <Rule RuleId="user-read-rule" Effect="Permit">
+            <Condition>
+                <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:any-of">
+                    <Function FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal"/>
+                    <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">user-panel</AttributeValue>
+                    <AttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id" Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"/>
+                </Apply>
+            </Condition>
+        </Rule>
+    </Policy>
+</PolicySet>
