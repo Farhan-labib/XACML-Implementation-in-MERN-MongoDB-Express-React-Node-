@@ -1,22 +1,39 @@
-// index.js (backend)
 require("dotenv").config();
 const express = require("express");
-const app = express();
+const session = require("express-session");
+const https = require("https");
+const fs = require("fs");
 const cors = require("cors");
-const passport = require('./passport'); // Import your passport configuration
+const passport = require('./passport');
 const connection = require("./db");
 const userRoutes = require("./routes/users");
 const authRoutes = require("./routes/auth");
 const PEPHandler = require("./routes/xacml");
 
-console.log("Getting Here")
+const app = express();
+
+console.log("Getting Here");
 // database connection
 connection();
 
 // middlewares
 app.use(express.json());
 app.use(cors());
+
+// Use express-session middleware with SameSite and Secure attributes
+app.use(session({
+  secret: 'wso2carbon', // Replace with your own secret
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    secure: true, // Ensures the cookie is only used over HTTPS
+    httpOnly: false, // Ensures the cookie is sent only over HTTP(S), not client JavaScript
+    sameSite: 'None' // Ensures the cookie is sent in cross-site requests
+  }
+}));
+
 app.use(passport.initialize()); // Initialize passport middleware
+app.use(passport.session()); // Use session middleware for persistent login sessions
 
 // PEP endpoint
 app.use("/api/pep", PEPHandler); // Mount the router for /api/pep
@@ -37,4 +54,14 @@ app.post('/api/auth/login/callback', passport.authenticate('saml', { failureRedi
 );
 
 const port = process.env.PORT || 8080;
-app.listen(port, () => console.log(`Listening on port ${port}...`));
+
+// Read the SSL certificate and key
+const httpsOptions = {
+  key: fs.readFileSync('./secuirity/key.pem'), // Path to your key.pem
+  cert: fs.readFileSync('./secuirity/cert.pem') // Path to your cert.pem
+};
+
+// Create HTTPS server
+https.createServer(httpsOptions, app).listen(port, () => {
+  console.log(`Listening on port ${port}...`);
+});
