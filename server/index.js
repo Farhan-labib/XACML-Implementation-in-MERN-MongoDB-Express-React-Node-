@@ -42,13 +42,16 @@ app.use("/api/pep", PEPHandler); // Mount the router for /api/pep
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
 
-app.post('/api/auth/login/callback', passport.authenticate('saml', { failureRedirect: '/', failureFlash: true }),
+app.post('/api/auth/login/callback', (req, res, next) => {
+    console.log("Callback route hit");
+    next();
+}, passport.authenticate('saml', { failureRedirect: '/', failureFlash: true }),
     function(req, res) {
-        // Successful authentication
+        console.log("Authentication successful");
         res.send('hello');
     },
     function(err, req, res, next) {
-        // Unsuccessful authentication
+        console.error("Authentication failed", err);
         res.send('bye');
     }
 );
