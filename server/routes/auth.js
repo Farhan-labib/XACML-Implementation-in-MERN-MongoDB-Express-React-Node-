@@ -1,6 +1,18 @@
+// auth.js
 const router = require("express").Router();
-const { loginUser } = require("../controllers/authController");
+const passport = require('../passport'); // Import your modified passport configuration
 
-router.post("/", loginUser);
+// Initiate SAML authentication
+router.get('/login', passport.authenticate('saml', { failureRedirect: '/', failureFlash: true }), function(req, res) {
+  res.redirect('/');
+});
+
+// Callback after successful SAML authentication
+router.post('/login/callback',
+  passport.authenticate('saml', { failureRedirect: '/', failureFlash: true }),
+  function(req, res) {
+    res.redirect('/'); // Redirect after successful authentication
+  }
+);
 
 module.exports = router;
